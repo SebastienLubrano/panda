@@ -105,7 +105,8 @@ static int honda_rx_hook(CAN_FIFOMailBox_TypeDef *to_push) {
     // 0x1A6 for the ILX, 0x296 for the Civic Touring
     if ((addr == 0x1A6) || (addr == 0x296)) {
       int button = (GET_BYTE(to_push, 0) & 0xE0) >> 5;
-      int button2 = (GET_BYTE(to_push, 0) & 0x0C) >> 2;
+      // Honda Nidec is byte 5 instead 0
+      int button2 = (GET_BYTE(to_push, 5) & 0x0C) >> 2;
       switch (button) {
         case 1:  // main
           disengageFromBrakes = false;
